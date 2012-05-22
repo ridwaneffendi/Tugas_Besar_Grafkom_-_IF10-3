@@ -7,3 +7,6 @@ yeahh!!!!
 ohhhhh
 
 tambah sedikit
+
+
+telah diedit terbaru
