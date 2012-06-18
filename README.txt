@@ -1,4 +1,3 @@
-ayo, silahkan di edit (buat para collaborator)
 Tugas Grafkom Membuat "Laptop 3D"
 Kelompok 3 IF-10
 Nama                            Nim
