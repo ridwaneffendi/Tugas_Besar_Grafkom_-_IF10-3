@@ -302,7 +302,25 @@ void myinit(void) {
             
             /* mulai menggambar */
 	    glTranslatef(0.0f, 0.0f, -20.0f);
+	    glColor3f(0.1f, 0.1f, 0.0f);
+
+	   //Menggambar lantai kayu
+	    glBindTexture(GL_TEXTURE_2D, texture[0]);
+            glBegin(GL_QUADS);
+	 
+	  
+            glTexCoord2f(1.0, 0.0);
+	    glVertex3f(-5.0f, -5.0f, 0.0f); //kiri-bawah
+	 
+            glTexCoord2f(1.0, 1.0);
+	    glVertex3f(-5.0f, -5.0f, -20.0f);//kiri-atas
 	   
+            glTexCoord2f(0.0, 1.0);
+	    glVertex3f(5.0f, -5.0f, -20.0f);//kanan-atas
+             
+	    glTexCoord2f(0.0, 0.0);
+	    glVertex3f(5.0f, -5.0f, 0.0f);//kanan-bawah
+            glEnd(); 
 	   
           
             
