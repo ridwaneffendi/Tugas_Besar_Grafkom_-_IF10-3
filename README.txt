@@ -1,5 +1,6 @@
-Tugas Grafkom Membuat "Laptop 3D"
-Kelompok 3 IF-10
+Tugas Besar Grafkom Kelompok 3 IF-10
+"Laptop 3D"
+
 Nama                            Nim
 1. Ridwan Effendi               10108479
 2. Anggi Mondera A              10108501
