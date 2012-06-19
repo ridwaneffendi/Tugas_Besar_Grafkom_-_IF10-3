@@ -305,7 +305,7 @@ void myinit(void) {
 	    //set new camera position
 	    camera();
 	 
-	    /** DRAW **/
+	    /** menggambar **/
 	 
 	    glTranslatef(0.0f, 0.0f, -20.0f);
 	    glColor3f(0.1f, 0.1f, 0.0f);
