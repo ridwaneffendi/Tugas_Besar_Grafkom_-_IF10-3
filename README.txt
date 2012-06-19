@@ -1,5 +1,5 @@
 Tugas Besar Grafkom 
-Kelompok 3 IF-10
+Kelompok 3 IF-10/VIII
 "Laptop 3D"
 
       Nama                        Nim
