@@ -12,8 +12,8 @@ float xpos = 0, ypos = 0, zpos = 0, xrot = 0, yrot = 0;
 float _angle = -70.0f;
 GLfloat lightPos1[] = {0.0f, 0.0f, 0.0f, 0.0f};
 
-GLuint texture[3];
-GLint slices = 16;
+GLuint texture[4];
+GLint slices = 16; 
 GLint stacks = 16;
 
 struct Image {
@@ -21,7 +21,7 @@ struct Image {
 	unsigned long sizeY;
 	char *data;
 };
-typedef struct Image Image; //struktur data untuk gambar
+typedef struct Image Image; //struktur data untuk
 
 
 //ukuran image  sesuai kebutuhan
@@ -51,7 +51,7 @@ int ImageLoad(char *filename, Image *image) {
 	unsigned short int plane; // number of planes in image
 
 	unsigned short int bpp; // jumlah bits per pixel
-	char temp; // penyimpanan warna temporer untuk memastikan filenya ada
+	char temp; // temporary color storage for var warna sementara untuk memastikan filenya ada
 
 
 	if ((file = fopen(filename, "rb")) == NULL) {
@@ -132,55 +132,59 @@ Image * loadTexture() {
 }
 
 Image * loadTextureDua() {
-	Image *image1;
+	Image *image2;
 	// alokasi memmory untuk tekstur
-	image1 = (Image *) malloc(sizeof(Image));
-	if (image1 == NULL) {
+	image2 = (Image *) malloc(sizeof(Image));
+	if (image2 == NULL) {
 		printf("Error allocating space for image");
 		exit(0);
 	}
 	//pic.bmp is a 64x64 picture
-	if (!ImageLoad("seven.bmp", image1)) {
+	if (!ImageLoad("keyboard.bmp", image2)) {
 		exit(1);
 	}
-	return image1;
+	return image2;
 }
 Image * loadTextureTiga() {
-	Image *image1;
+	Image *image3;
 	// alokasi memmory untuk tekstur
-	image1 = (Image *) malloc(sizeof(Image));
-	if (image1 == NULL) {
+	image3 = (Image *) malloc(sizeof(Image));
+	if (image3 == NULL) {
 		printf("Error allocating space for image");
 		exit(0);
 	}
 	//pic.bmp is a 64x64 picture
-	if (!ImageLoad("layar.bmp", image1)) {
+	if (!ImageLoad("layar.bmp", image3)) {
 		exit(1);
 	}
-	return image1;
+	return image3;
 }
 
+
+
 void myinit(void) {
-	glClearColor(0.5, 0.5, 0.5, 0.0);
+	glClearColor(1.0, 1.0, 1.0, 0.0); //warna untuk background
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 
 	Image *image1 = loadTexture();
 	Image *image2 = loadTextureDua();
+        Image *image3 = loadTextureTiga();
+       
 
 	if (image1 == NULL) {
 		printf("Image was not returned from loadTexture\n");
 		exit(0);
 	}
 
-	makeCheckImage();
+	makeCheckImage(); //memanggil prodesur makeCheckImage
 
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);   
 
 	// Generate texture/ membuat texture
-	glGenTextures(2, texture);
+	glGenTextures(4, texture);
 
-	//binding texture untuk membuat texture 2D
+	//binding atau memasang texture untuk membuat texture 2D
 	glBindTexture(GL_TEXTURE_2D, texture[0]);
 
 	//menyesuaikan ukuran textur ketika image lebih besar dari texture
@@ -191,7 +195,7 @@ void myinit(void) {
 	glTexImage2D(GL_TEXTURE_2D, 0, 3, image1->sizeX, image1->sizeY, 0, GL_RGB,
 			GL_UNSIGNED_BYTE, image1->data);
 
-	//tekstur air
+
 
 	//binding texture untuk membuat texture 2D
 	glBindTexture(GL_TEXTURE_2D, texture[1]);
@@ -203,14 +207,15 @@ void myinit(void) {
 
 	glTexImage2D(GL_TEXTURE_2D, 0, 3, image2->sizeX, image2->sizeY, 0, GL_RGB,
 			GL_UNSIGNED_BYTE, image2->data);
+        
 
-	//baris tekstur buatan #belang
+	//baris tekstur buatan 
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
 
 
 
-	//binding texture baru untuk papan catur
-	glBindTexture(GL_TEXTURE_2D, texture[2]);
+	//binding texture baru 
+	glBindTexture(GL_TEXTURE_2D, texture[3]);
 
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
@@ -230,7 +235,7 @@ void myinit(void) {
 	 
 	
 	 
-	//dipanggil ketika tombol ditekan
+	//Called when a key is pressed
 	void handleKeypress(unsigned char key, int x, int y) {
 	     
 	    if (key=='w')
@@ -259,19 +264,19 @@ void myinit(void) {
 	  
 	 
 	    switch (key) {
-	        case 27: //tombol ESC
+	        case 27: //Escape key
 	            exit(0);
 	    }
 	}
 	 
-	//setting kamera
+	//set camera
 	void camera (void) {
 	     glRotatef(xrot,1.0,0.0,0.0);
 	     glRotatef(yrot,0.0,1.0,0.0);
-	     glTranslated(-xpos,-ypos,-zpos);
+	     
 	 }
 	 
-	//Inisialisasi 3D rendering
+	//Initializes 3D rendering
 	void initRendering() {
 	    glEnable(GL_DEPTH_TEST);
 	    glEnable(GL_COLOR_MATERIAL);
@@ -279,15 +284,15 @@ void myinit(void) {
 	    glEnable(GL_LIGHT0);
 	}
 	 
-	//dipangil ketika window di resize
+	//Called when the window is resized
 	void handleResize(int w, int h) {
-	    glViewport(0, 0, w, h);
+	    glViewport(0, 0, w, h); //menghandle ketika objek di resize
 	    glMatrixMode(GL_PROJECTION);
 	    glLoadIdentity();
 	    gluPerspective(30.0, (double)w / (double)h, 1.0, 200.0);
 	}
 	 
-	//menggammbar objek 3D
+	//Draws the 3D scene
 	void drawScene() {
 	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	     
@@ -297,36 +302,38 @@ void myinit(void) {
 	     
 	    glLightfv(GL_LIGHT1, GL_POSITION, lightPos1);
 	 
-	    //memanggil prosedur kamera
+	    //set new camera position
 	    camera();
-            
-            /* mulai menggambar */
+	 
+	    /** DRAW **/
+	 
 	    glTranslatef(0.0f, 0.0f, -20.0f);
 	    glColor3f(0.1f, 0.1f, 0.0f);
-
-	   //Menggambar lantai kayu
-	    glBindTexture(GL_TEXTURE_2D, texture[0]);
-            glBegin(GL_QUADS);
 	 
-	  
+	    glBindTexture(GL_TEXTURE_2D, texture[0]);
+          
+            glBegin(GL_QUADS);
+            
             glTexCoord2f(1.0, 0.0);
 	    glVertex3f(-5.0f, -5.0f, 0.0f); //kiri-bawah
 	 
             glTexCoord2f(1.0, 1.0);
-	    glVertex3f(-5.0f, -5.0f, -20.0f);//kiri-atas
+	     glVertex3f(-5.0f, -5.0f, -20.0f);//kiri-atas
 	   
-            glTexCoord2f(0.0, 1.0);
-	    glVertex3f(5.0f, -5.0f, -20.0f);//kanan-atas
+             glTexCoord2f(0.0, 1.0);
+	     glVertex3f(5.0f, -5.0f, -20.0f);//kanan-atas
              
-	    glTexCoord2f(0.0, 0.0);
-	    glVertex3f(5.0f, -5.0f, 0.0f);//kanan-bawah
-            glEnd(); 
-	   
-          
+	      glTexCoord2f(0.0, 0.0);
+	     glVertex3f(5.0f, -5.0f, 0.0f);//kanan-bawah
+                glEnd(); 
+                
             
+        
+                
             //untuk menggerakkan objek
 	    glRotatef(_angle, 0.0f, 1.0f, 0.5f);
 	    glColor3f(0.1f, 0.1f, 0.1f);
+            
 	     
 	    //keyboard
 	     glPushMatrix();
@@ -336,12 +343,24 @@ void myinit(void) {
              glPopMatrix();
 	     
              glPushMatrix();
-             glScaled(1.5, 0.06, 1.0);
-             glBindTexture(GL_TEXTURE_2D, texture[2]);
-             glutSolidCube(2.5);
-             glPopMatrix();
+             glBindTexture(GL_TEXTURE_2D, texture[1]);
+             glTranslatef(0,0,1.4);
+            glBegin(GL_QUADS);
+            
+            glTexCoord2f(1.0, 0.0);
+	    glVertex3f(-2.0f, 0.1f, 0.0f); //kiri-bawah
+	 
+            glTexCoord2f(1.0, 1.0);
+	     glVertex3f(-2.0f, 0.1f, -2.5f);//kiri-atas
 	   
-             //layar
+             glTexCoord2f(0.0, 1.0);
+	     glVertex3f(2.0f, 0.1f, -2.5f);//kanan-atas
+             
+	      glTexCoord2f(0.0, 0.0);
+	     glVertex3f(2.0f, 0.1f, 0.0f);//kanan-bawah
+                glEnd(); 
+             glPopMatrix();
+	    //layar
 	     glPushMatrix();
              glScaled(1.5, 1, 0.05);
              glTranslated(0, 1.65, -33);
@@ -350,10 +369,22 @@ void myinit(void) {
              glPopMatrix();
              
              glPushMatrix();
-             glScaled(1.5, 1, 0.05);
-             glTranslated(0, 1.65, -31);
              glBindTexture(GL_TEXTURE_2D, texture[2]);
-             glutSolidCube(2.5);
+             glTranslatef(0,0,1.5);
+             glBegin(GL_QUADS);
+            
+             glTexCoord2f(1.0, 0.0);
+	     glVertex3f(-2.0f, 3.0f, -3.0f); //kiri-bawah
+	 
+             glTexCoord2f(1.0, 1.0);
+	     glVertex3f(-2.0f, 0.5f, -3.0f);//kiri-atas
+	   
+             glTexCoord2f(0.0, 1.0);
+	     glVertex3f(2.0f, 0.5f, -3.0f);//kanan-atas
+             
+	     glTexCoord2f(0.0, 0.0);
+	     glVertex3f(2.0f, 3.0f, -3.0f);//kanan-bawah
+             glEnd(); 
              glPopMatrix();
              
              //engsel
@@ -381,12 +412,12 @@ void myinit(void) {
 	}
 	 
 	int main(int argc, char** argv) {
-	    //Inisialisasi GLUT
+	    //Initialize GLUT
 	    glutInit(&argc, argv);
 	    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	    glutInitWindowSize(800, 600);
 	     
-	    //buat window
+	    //Create the window
 	    glutCreateWindow("LAPTOP 3D");
 	    initRendering();
             myinit();
@@ -394,7 +425,7 @@ void myinit(void) {
 	    glutKeyboardFunc(handleKeypress);
 	    glutReshapeFunc(handleResize);
 	     
-	    glutTimerFunc(25, update, 0); //timer untuk perputarannya
+	    glutTimerFunc(25, update, 0); //Add a timer
 	     
 	    glutMainLoop();
 	    return 0;

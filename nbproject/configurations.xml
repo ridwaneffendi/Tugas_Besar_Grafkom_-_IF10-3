@@ -12,6 +12,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>keyboard.bmp</itemPath>
       <itemPath>layar.bmp</itemPath>
       <itemPath>main.c</itemPath>
       <itemPath>seven.bmp</itemPath>
