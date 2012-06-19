@@ -286,7 +286,7 @@ void myinit(void) {
 	 
 	//Called when the window is resized
 	void handleResize(int w, int h) {
-	    glViewport(0, 0, w, h); //menghandle ketika objek di resize
+	    glViewport(0, 0, w, h); //menghandle objek ketika windows di resize
 	    glMatrixMode(GL_PROJECTION);
 	    glLoadIdentity();
 	    gluPerspective(30.0, (double)w / (double)h, 1.0, 200.0);
