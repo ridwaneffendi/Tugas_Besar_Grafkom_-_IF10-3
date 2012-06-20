@@ -292,7 +292,7 @@ void myinit(void) {
 	    gluPerspective(30.0, (double)w / (double)h, 1.0, 200.0);
 	}
 	 
-	//Draws the 3D scene
+	//Menggambar layar 3 dimensi
 	void drawScene() {
 	    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	     
